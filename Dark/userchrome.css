@@ -19,6 +19,7 @@
 	--editor-checkbox-color:             lightgrey;
 	--editor-checkbox-checked-color:     #FFCB6B;                  /* orange */
 	--editor-selected-text-bgcolor:      #0663d3;                    /* blue */
+	--editor-katex-macro-color:          #ff5370;                     /* red */
 	--note-count-label-background-color: #1d2927;
 	--note-count-label-box-shadow:       white;
 }
@@ -31,8 +32,12 @@
 /*---------------------------------------------------------------------------*/
 
 /*------ Editor: inline code and codeblocks ---------------------------------*/
-pre.CodeMirror-line span[role="presentation"] span.cm-comment {
+pre.CodeMirror-line span[role="presentation"] span.cm-comment, /* CM5 */
+.cm-line.cm-codeBlock, .cm-editor .cm-line .cm-inlineCode /* CM6 */ {
 	color: var(--editor-code-color) !important;
+	background-color: transparent;
+	border: none;
+	border-width: 0;
 }
 /*---------------------------------------------------------------------------*/
 
@@ -45,31 +50,39 @@ pre.CodeMirror-line span[role="presentation"] span.cm-comment {
 /*---------------------------------------------------------------------------*/
 
 /*------ Editor: text in brackets [ ] ---------------------------------------*/
-.cm-link-text {
+.cm-link-text, /* CM5 */
+.cm-editor .tok-link /* CM6 */ {
 	color: var(--editor-text-in-brackets-color) !important;
 }
 /*---------------------------------------------------------------------------*/
 
 /*------ Editor: text/link in parens ( ) ------------  ----------------------*/
-.cm-string.cm-url  {
+.cm-string.cm-url, /* CM5 */
+.cm-editor .cm-url > .tok-link, /* CM6: Link */
+.cm-editor .cm-url + .tok-link, /* CM6: Left paren ( */
+.cm-editor .tok-link:has(+ .cm-url) /* CM6: Right paren ) */ {
 	color: var(--editor-text-in-parens-color) !important;
+	opacity: 1;
 }
 /*---------------------------------------------------------------------------*/
 
 /*------ Editor: strong -----------------------------------------------------*/
-.cm-strong {
+.cm-strong, /* CM5 */
+.cm-editor .tok-strong /* CM6 */ {
 	color: var(--editor-strong-color) !important;
 }
 /*---------------------------------------------------------------------------*/
 
 /*------ Editor: italics ----------------------------------------------------*/
-.cm-em {
+.cm-em, /* CM5 */
+.cm-editor .tok-emphasis /* CM6 */ {
 	color: var(--editor-emphasis-color) !important;
 }
 /*---------------------------------------------------------------------------*/
 
 /*------ Editor: list elements and checkbox elements ------------------------*/
-.cm-variable-2, .cm-variable-3, .cm-keyword {
+.cm-variable-2, .cm-variable-3, .cm-keyword, /* CM5 */
+.cm-editor .cm-listItem /* CM6 */ {
 	color: var(--editor-list-element-color) !important;
 }
 /*---------------------------------------------------------------------------*/
@@ -78,13 +91,27 @@ pre.CodeMirror-line span[role="presentation"] span.cm-comment {
 .cm-meta {
 	color: var(--editor-checkbox-checked-color) !important;
 }
-.cm-property {
+.cm-property, /* CM5 */
+.cm-editor .cm-taskMarker > .tok-atom /* CM6 */ {
 	color: var(--editor-checkbox-checked-color) !important;
 }
 /*---------------------------------------------------------------------------*/
 
+/*------ Editor: Katex containers -------------------------------------------*/
+.cm-editor .cm-line.cm-mathBlock, .cm-editor .cm-inlineMath {
+	color: var(--joplin-color);
+}
+/*---------------------------------------------------------------------------*/
+
+/*------ Editor: Katex macros -----------------------------------------------*/
+.cm-mathBlock .tok-typeName, .cm-inlineMath .tok-typeName {
+	color: var(--editor-katex-macro-color); /* Use the editor main text color */
+}
+/*---------------------------------------------------------------------------*/
+
 /*------ Editor: selected text background color -----------------------------*/
-.CodeMirror-selected {
+.CodeMirror-selected, /* CM5 */
+.cm-selectionBackground /* CM6 */ {
 	background: var(--editor-selected-text-bgcolor) !important;
 }
 /*---------------------------------------------------------------------------*/
@@ -106,11 +133,10 @@ a.list-item {
 /*---------------------------------------------------------------------------*/
 
 /*------ Notebook pane: Nicer note count label ------------------------------*/
-.note-count-label {
+.list-item .note-count-label {
 	display: flex;
 	margin: 0 4px 0 auto;
-	padding: 0 6px;
-	padding-left: 0;
+	padding: 0px 6px !important;
 	background: var(--note-count-label-background-color);
 	border-radius: 8px;
 	box-shadow: 0 0 2px var(--note-count-label-box-shadow);
@@ -138,7 +164,7 @@ a.list-item {
 
 /*------ Remove New notebook button -----------------------------------------*/
 /*
-#react-root > div > div > div.resizableLayoutItem.rli-root > div.resizableLayoutItem.rli-sideBar > div > div > div:nth-child(1) > div:nth-child(1) > button {
+.sidebar-header-container > button {
 	display: none;
 }
 */
@@ -170,7 +196,7 @@ div.new-note-todo-buttons {
 
 /*------ Remove Code View button --------------------------------------------*/
 /*
-div.editor-toolbar div button {
+div.editor-toolbar button.markdown-active {
 	display: none !important;
 }
 */
@@ -178,7 +204,7 @@ div.editor-toolbar div button {
 
 /*------ Remove Spellcheck button -------------------------------------------*/
 /*
-a[title="Spell checker"] {
+button[title="Spell checker"] {
 	display: none;
 }
 */
@@ -188,11 +214,16 @@ a[title="Spell checker"] {
 /* .header input { */
 input {
 	border-radius: 14px !important;
-	border: 1px solid rgb(85, 85, 85);
+	border: 1px solid rgb(85, 85, 85) !important;
 	outline: none;
 	/*
 	background-color: #888888 !important;
 	*/
+}
+/*------ Title input only ---------------------------------------------------*/
+input.title-input {
+	padding: 4px 8px !important;
+	margin-bottom: 2px;
 }
 /*---------------------------------------------------------------------------*/
 
