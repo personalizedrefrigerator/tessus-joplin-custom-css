@@ -58,6 +58,7 @@ pre.CodeMirror-line span[role="presentation"] span.cm-comment, /* CM5 */
 
 /*------ Editor: text/link in parens ( ) ------------  ----------------------*/
 .cm-string.cm-url, /* CM5 */
+.cm-editor .cm-url, /* CM6: Full URL */
 .cm-editor .cm-url > .tok-link, /* CM6: Link */
 .cm-editor .cm-url + .tok-link, /* CM6: Left paren ( */
 .cm-editor .tok-link:has(+ .cm-url) /* CM6: Right paren ) */ {
@@ -92,6 +93,7 @@ pre.CodeMirror-line span[role="presentation"] span.cm-comment, /* CM5 */
 	color: var(--editor-checkbox-checked-color) !important;
 }
 .cm-property, /* CM5 */
+.cm-editor .cm-taskMarker span, /* CM6 */
 .cm-editor .cm-taskMarker > .tok-atom /* CM6 */ {
 	color: var(--editor-checkbox-checked-color) !important;
 }
@@ -104,7 +106,8 @@ pre.CodeMirror-line span[role="presentation"] span.cm-comment, /* CM5 */
 /*---------------------------------------------------------------------------*/
 
 /*------ Editor: Katex macros -----------------------------------------------*/
-.cm-mathBlock .tok-typeName, .cm-inlineMath .tok-typeName {
+.cm-editor .cm-mathBlock .tok-typeName,
+.cm-editor .cm-inlineMath .tok-typeName {
 	color: var(--editor-katex-macro-color); /* Use the editor main text color */
 }
 /*---------------------------------------------------------------------------*/
