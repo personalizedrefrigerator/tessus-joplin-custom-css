@@ -68,7 +68,9 @@ h1, h2, h3, h4, h5, h6 {
 /*---------------------------------------------------------------------------*/
 
 /*------ Headings: Use nested counters --------------------------------------*/
-body { counter-reset: h1counter; }
+body, #rendered-md {
+	counter-reset: h1counter 0;
+}
 h1 { counter-reset: h2counter; }
 h2 { counter-reset: h3counter; }
 h3 { counter-reset: h4counter; }
